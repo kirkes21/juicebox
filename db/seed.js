@@ -4,22 +4,6 @@ const {
     createUser
 } = require('./index')
 
-// creates some users
-async function createInitialUsers() {
-    try {
-        console.log('Starting to create users...')
-
-        const albert = await createUser({ username: 'albert', password: 'bertie99' })
-        const sandra = await createUser({ username: 'sandra', password: '2sandy4me' })
-        const glamgal = await createUser({ username: 'glamgal', password: 'soglam' })
-
-        console.log('Finished creating users!')
-    } catch (error) {
-        console.error('Error creating users!')
-        throw error
-    }
-}
-
 // drops all tables from database
 async function dropTables() {
     try {
@@ -45,7 +29,10 @@ async function createTables() {
             CREATE TABLE users (
                 id SERIAL PRIMARY KEY,
                 username varchar(255) UNIQUE NOT NULL,
-                password varchar(255) NOT NULL
+                password varchar(255) NOT NULL,
+                name VARCHAR(255) NOT NULL,
+                location VARCHAR(255) NOT NULL,
+                active BOOLEAN DEFAULT true
             );
       `);
         console.log('Finished building tables!')
@@ -53,6 +40,37 @@ async function createTables() {
     } catch (error) {
         console.error('Error building tables!')
         throw error; // pass the error up to the function that calls createTables
+    }
+}
+
+// creates some users
+async function createInitialUsers() {
+    try {
+        console.log('Starting to create users...')
+
+        const albert = await createUser({
+            username: 'albert',
+            password: 'bertie99',
+            name: 'Albert Wise',
+            location: 'Florida'
+        })
+        const sandra = await createUser({
+            username: 'sandra',
+            password: '2sandy4me',
+            name: 'Sandy Cheeks',
+            location: 'Bikini Bottom'
+        })
+        const glamgal = await createUser({
+            username: 'glamgal',
+            password: 'soglam',
+            name: 'Glamorous Girl',
+            location: 'New York City, NY'
+        })
+
+        console.log('Finished creating users!')
+    } catch (error) {
+        console.error('Error creating users!')
+        throw error
     }
 }
 
