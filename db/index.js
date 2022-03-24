@@ -4,18 +4,15 @@ const { Client } = require('pg')  // import pg module
 const client = new Client('postgres://localhost:5432/juicebox-dev')
 
 async function getUserById(userId) {
-    if (rows.length === 0) {
-        return
-    }
-
     try {
         const { rows: [user] } = await client.query(`
         SELECT id, username, name, location, active
         FROM users
-        WHERE user.id=${userId};
+        WHERE id=${userId};
         `)
 
-        user.push(getPostsByUser(userId))
+        const posts = await getPostsByUser(userId)
+        user.posts = posts
 
         return user
     } catch (error) {
@@ -25,7 +22,7 @@ async function getUserById(userId) {
 
 async function getPostsByUser(userId) {
     try {
-        const { rows } = client.query(`
+        const { rows } = await client.query(`
         SELECT * FROM posts
         WHERE "authorId"=${userId};
         `)
