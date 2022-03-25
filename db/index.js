@@ -6,6 +6,32 @@ const client = new Client('postgres://localhost:5432/juicebox-dev')
 /**
  * Tag Methods
  */
+const addTagsToPost = async (postId, tagList) => {
+    try {
+        const createPostTagPromises = tagList.map(
+            tag => createPostTag(postId, tag.id)
+        )
+
+        await Promise.all(createPostTagPromises)
+
+        return await getPostById(postId)
+    } catch (error) {
+        throw error
+    }
+}
+
+async function createPostTag(postId, tagId) {
+    try {
+        await client.query(`
+        INSERT INTO post_tags("postId", "tagId")
+        VALUES ($1, $2)
+        ON CONFLICT ("postId", "tagId") DO NOTHING;
+      `, [postId, tagId]);
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function createTags(tagList) {
     if (tagList.length === 0) {
         return;
@@ -24,9 +50,20 @@ async function createTags(tagList) {
     try {
         // insert the tags, doing nothing on conflict
         // returning nothing, we'll query after
+        const insertTags = await client.query(`
+        INSERT INTO tags(name)
+        VALUES (${insertValues}
+        ON CONFLICT (name) DO NOTHING;
+        `)
 
         // select all tags where the name is in our taglist
         // return the rows from the query
+        const selectTags = await client.query(`
+        SELECT * FROM tags
+        WHERE name
+        IN (${selectValues});
+        `)
+
     } catch (error) {
         throw error;
     }
@@ -36,6 +73,38 @@ async function createTags(tagList) {
 /**
  * Post Methods
  */
+async function getPostById(postId) {
+    try {
+        const { rows: [post] } = await client.query(`
+        SELECT *
+        FROM posts
+        WHERE id=$1;
+      `, [postId]);
+
+        const { rows: tags } = await client.query(`
+        SELECT tags.*
+        FROM tags
+        JOIN post_tags ON tags.id=post_tags."tagId"
+        WHERE post_tags."postId"=$1;
+      `, [postId])
+
+        const { rows: [author] } = await client.query(`
+        SELECT id, username, name, location
+        FROM users
+        WHERE id=$1;
+      `, [post.authorId])
+
+        post.tags = tags;
+        post.author = author;
+
+        delete post.authorId;
+
+        return post;
+    } catch (error) {
+        throw error;
+    }
+}
+
 async function getPostsByUser(userId) {
     try {
         const { rows } = await client.query(`
@@ -189,5 +258,7 @@ module.exports = {
     getUserById,
     getAllPosts,
     updatePost,
-    createPost
+    createPost,
+    addTagsToPost,
+    createTags
 }
