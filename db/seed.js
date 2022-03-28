@@ -53,11 +53,13 @@ async function createTables() {
             );
             CREATE TABLE tags (
                 id SERIAL PRIMARY KEY,
-                name VARCHAR(255) UNIQUE NOT NULL
+                name VARCHAR(255) NOT NULL,
+                UNIQUE (name)
             );
             CREATE TABLE post_tags (
-                "postId" INTEGER REFERENCES posts(id) UNIQUE,
-                "tagId" INTEGER REFERENCES tags(id) UNIQUE
+                "postId" INTEGER REFERENCES posts(id),
+                "tagId" INTEGER REFERENCES tags(id),
+                UNIQUE ("postId", "tagId")
             );
       `);
         console.log('Finished building tables!')
