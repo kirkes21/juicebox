@@ -6,6 +6,19 @@ const client = new Client('postgres://localhost:5432/juicebox-dev')
 /**
  * Tag Methods
  */
+async function getAllTags() {
+    try {
+        const { rows } = await client.query(`
+          SELECT *
+          FROM tags;
+        `);
+
+        return rows;
+    } catch (error) {
+        throw error;
+    }
+}
+
 const addTagsToPost = async (postId, tagList) => {
     try {
         const createPostTagPromises = tagList.map(
@@ -254,11 +267,16 @@ async function getUserById(userId) {
 }
 
 async function getAllUsers() {
-    const { rows } = await client.query(
-        `SELECT id, username, name, location, active
-        FROM users;
-        `)
-    return rows
+    try {
+        const { rows } = await client.query(`
+          SELECT id, username, name, location, active 
+          FROM users;
+        `);
+
+        return rows;
+    } catch (error) {
+        throw error;
+    }
 }
 
 async function updateUser(id, fields = {}) {
@@ -321,5 +339,6 @@ module.exports = {
     createTags,
     createPostTag,
     getPostById,
-    getPostsByTagName
+    getPostsByTagName,
+    getAllTags
 }
