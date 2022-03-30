@@ -244,7 +244,12 @@ async function updatePost(postId, fields = {}) {
   }
 }
 
-async function createPost({ authorId, title, content, tags = [] }) {
+async function createPost({
+  authorId,
+  title,
+  content,
+  tags = []
+}) {
   try {
     const {
       rows: [post],

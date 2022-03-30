@@ -1,3 +1,5 @@
-curl http://localhost:3000/api -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6IlwiMVwiIiwidXNlcm5hbWUiOiJcImFsYmVydFwiIiwiaWF0IjoxNjQ4NTgxNjQ4fQ.SivOXxIruoLL4uTBFCViK2AdB8IHDKvcyd6FIyB-r8c'
+curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTE2OTB9.avmTz2QXxjjE4mjavGnEVf8kxKK86eUG48mU2nRL3jo'
 
 curl http://localhost:3000/api/users/login -H "Content-Type: application/json" -X POST -d '{"username": "albert", "password": "bertie99"}'
+
+curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTE2OTB9.avmTz2QXxjjE4mjavGnEVf8kxKK86eUG48mU2nRL3jo' -H 'Content-Type: application/json' -d '{"title": "test post", "content": "how is this?", "tags": " #once #twice    #happy"}'
