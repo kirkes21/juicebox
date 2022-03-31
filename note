@@ -1,9 +1,14 @@
-curl https://evening-earth-35220.herokuapp.com/api/users/login -H "Content-Type: application/json" -X POST -d '{"username": "glamgal", "password": "soglam"}'
+curl http://localhost:3000/api/users/login -H "Content-Type: application/json" -X POST -d '{"username": "glamgal", "password": "soglam"}'
 
 curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTE2OTB9.avmTz2QXxjjE4mjavGnEVf8kxKK86eUG48mU2nRL3jo'
 
 curl http://localhost:3000/api/users/login -H "Content-Type: application/json" -X POST -d '{"username": "albert", "password": "bertie99"}'
 
-curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTE2OTB9.avmTz2QXxjjE4mjavGnEVf8kxKK86eUG48mU2nRL3jo' -H 'Content-Type: application/json' -d '{"title": "test post", "content": "how is this?", "tags": " #once #twice    #happy"}'
+curl http://localhost:3000/api/posts -X POST -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTE2OTB9.avmTz2QXxjjE4mjavGnEVf8kxKK86eUG48mU2nRL3jo' -H 'Content-Type: application/json' -d '{"title": "test post", "content": "how is this?", "tags": " #once #twice #happy"}'
 
 curl http://localhost:3000/api/posts/1 -X DELETE -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MSwidXNlcm5hbWUiOiJhbGJlcnQiLCJpYXQiOjE2NDg2NTYwMDh9.MYCL8AH8T5micF_ECGcBVZLD4C-E_pG6B17ap6uWsEA'
+
+curl http://localhost:3000/api/users/3 -X DELETE -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzM1MTU3fQ.k-Gcvs03387ed1ylZtPLilax6T08u64veI3LdBerWrI'
+
+glamgal key
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzM3NzEzfQ.CvHJmhnYv4s6MNrQMqqwVCzn0wR-zUgta5LUdZ0QPpM

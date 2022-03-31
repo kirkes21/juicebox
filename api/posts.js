@@ -5,7 +5,6 @@ const { requireUser } = require("./utils");
 
 postsRouter.post("/", requireUser, async (req, res, next) => {
   const { title, content, tags = "" } = req.body;
-  const { id } = req.user;
 
   const tagArr = tags.trim().split(/\s+/);
   let postData = {};
@@ -106,13 +105,13 @@ postsRouter.delete("/:postId", requireUser, async (req, res, next) => {
       next(
         post
           ? {
-              name: "UnauthorizedUserError",
-              message: "You cannot delete a post which is not yours",
-            }
+            name: "UnauthorizedUserError",
+            message: "You cannot delete a post which is not yours",
+          }
           : {
-              name: "PostNotFoundError",
-              message: "That post does not exist",
-            }
+            name: "PostNotFoundError",
+            message: "That post does not exist",
+          }
       );
     }
   } catch ({ name, message }) {
