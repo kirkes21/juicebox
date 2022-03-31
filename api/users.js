@@ -1,6 +1,7 @@
 const express = require("express");
 const usersRouter = express.Router();
-const { getAllUsers, getUserByUsername, createUser } = require("../db");
+const { getAllUsers, getUserByUsername, createUser, updateUser, getUserById } = require("../db");
+const { requireUser, requireActiveUser } = require("./utils");
 const jwt = require("jsonwebtoken");
 
 usersRouter.use((req, res, next) => {
@@ -88,6 +89,62 @@ usersRouter.post('/register', async (req, res, next) => {
         });
     } catch ({ name, message }) {
         next({ name, message })
+    }
+});
+
+usersRouter.delete("/:userId", requireUser, requireActiveUser, async (req, res, next) => {
+
+    try {
+        const user = await getUserById(req.params.userId);
+
+        if (user && user.id === req.user.id) {
+            const deactivatedUser = await updateUser(user.id, { active: false });
+
+            res.send({ user: deactivatedUser });
+        } else {
+            // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+            next(
+                post
+                    ? {
+                        name: "UnauthorizedUserError",
+                        message: "You cannot delete a user which is not yours",
+                    }
+                    : {
+                        name: "UserNotFoundError",
+                        message: "That user does not exist",
+                    }
+            );
+        }
+    } catch ({ name, message }) {
+        next({ name, message });
+    }
+});
+
+usersRouter.patch("/:userId", requireUser, async (req, res, next) => {
+
+    try {
+        const user = await getUserById(req.params.userId);
+
+        if (user && user.id === req.user.id) {
+            const reactivatedUser = await updateUser(user.id, { active: true });
+
+            res.send({ user: reactivatedUser });
+        } else {
+            // if there is a user logged in, throw UnauthorizedUserError, otherwise throw UserNotFoundError
+            next(
+                post
+                    ? {
+                        name: "UnauthorizedUserError",
+                        message: "You cannot reactivate a user which is not yours",
+                    }
+                    : {
+                        name: "UserNotFoundError",
+                        message: "That user does not exist",
+                    }
+            );
+        }
+    } catch ({ name, message }) {
+        next({ name, message });
     }
 });
 
