@@ -26,7 +26,7 @@ tagsRouter.get("/:tagName/posts", async (req, res, next) => {
 
     // Only keep posts posted by the logged-in user
     const posts = postListByTagName.filter((post) => {
-      return post.active && (req.user && post.author.id === req.user.id);
+      return (post.active && post.author.active) || (req.user && post.author.id === req.user.id);
     });
 
     res.send({ post: posts });

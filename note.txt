@@ -10,5 +10,7 @@ curl http://localhost:3000/api/posts/1 -X DELETE -H 'Authorization: Bearer eyJhb
 
 curl http://localhost:3000/api/users/3 -X DELETE -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzM1MTU3fQ.k-Gcvs03387ed1ylZtPLilax6T08u64veI3LdBerWrI'
 
+curl http://localhost:3000/api/tags/%23happy/posts -H 'Authorization: Bearer eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzQxMDk1fQ.mTawtcDC3citR4rtdYNwtigGRSZUvvtAj-qpydURfgM'
+
 glamgal key
-eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzM3NzEzfQ.CvHJmhnYv4s6MNrQMqqwVCzn0wR-zUgta5LUdZ0QPpM
+eyJhbGciOiJIUzI1NiIsInR5cCI6IkpXVCJ9.eyJpZCI6MywidXNlcm5hbWUiOiJnbGFtZ2FsIiwiaWF0IjoxNjQ4NzQxMDk1fQ.mTawtcDC3citR4rtdYNwtigGRSZUvvtAj-qpydURfgM
